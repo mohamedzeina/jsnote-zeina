@@ -19,11 +19,17 @@ const App = () => {
     startService();
   }, []); //second argument ([]) just states that this function will be called only once when the page renders
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!ref.current) {
       return;
     }
-    console.log(ref.current);
+
+    const result = await ref.current.transform(input, {
+      loader: 'jsx',
+      target: 'es2015',
+    });
+
+    setCode(result.code);
   };
 
   return (
