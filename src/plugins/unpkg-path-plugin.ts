@@ -11,10 +11,14 @@ export const unpkgPathPlugin = () => {
           return { path: args.path, namespace: 'a' };
         }
 
+        // Case for packages having relative and nested paths
         if (args.path.includes('./') || args.path.includes('../')) {
           return {
             namespace: 'a',
-            path: new URL(args.path, args.importer + '/').href //forward slash for the URL constructor to use the relative path of the URL
+            path: new URL(args.path,
+              'https://unpkg.com'
+              + args.resolveDir
+              + '/').href //Forward slash for the URL constructor to use the relative path of the URL
           }
         }
 
@@ -39,11 +43,18 @@ export const unpkgPathPlugin = () => {
           };
         }
 
-        const { data } = await axios.get(args.path)
+        const { data, request } = await axios.get(args.path)
         return {
           loader: 'jsx',
           contents: data,
+          resolveDir: new URL('./', request.responseURL).pathname // First argument passed is used to remove the /index.js at the end of the url
         };
+
+        /* Since unpkg automatically redirects us to the actual path of the package
+        when the name of the package is name in the url, there could be cases where 
+        we end up in a nested folder. For this reason, we added a resolveDir attribute
+        that saves the resloved directory of the file that is requiring the new package
+        */
 
       });
     },
