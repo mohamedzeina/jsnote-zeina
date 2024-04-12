@@ -11,6 +11,13 @@ export const unpkgPathPlugin = () => {
           return { path: args.path, namespace: 'a' };
         }
 
+        if (args.path.includes('./') || args.path.includes('../')) {
+          return {
+            namespace: 'a',
+            path: new URL(args.path, args.importer + '/').href //forward slash for the URL constructor to use the relative path of the URL
+          }
+        }
+
         return {
           namespace: 'a',
           path: `https://unpkg.com/${args.path}`
