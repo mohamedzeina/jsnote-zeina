@@ -1,5 +1,11 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios';
+import localforage from 'localforage';
+
+//Creating an indexed db with the name 'filecache'
+const fileCache = localforage.createInstance({
+  name: 'filecache',
+});
 
 export const unpkgPathPlugin = () => {
   return {
@@ -41,19 +47,41 @@ export const unpkgPathPlugin = () => {
           };
         }
 
+        // Check to see if we already fetched this file
+        const cachedResult = await fileCache.getItem(args.path);
+
+        // and if it is in the cache, return it immediately
+        if (cachedResult) {
+          return cachedResult;
+        }
+
         const { data, request } = await axios.get(args.path);
-        return {
+
+        const result = {
           loader: 'jsx',
           contents: data,
           resolveDir: new URL('./', request.responseURL).pathname, // First argument passed is used to remove the /index.js at the end of the url
         };
 
-        /* Since unpkg automatically redirects us to the actual path of the package
-        when the name of the package is name in the url, there could be cases where 
-        we end up in a nested folder. For this reason, we added a resolveDir attribute
-        that saves the resloved directory of the file that is requiring the new package
-        */
+        //store it inside the cache
+        await fileCache.setItem(args.path, result);
+
+        return result;
       });
     },
   };
 };
+
+// *********** Resolving Unpkg Nested Path *********** //
+/* Since unpkg automatically redirects us to the actual path of the package
+  when the name of the package is name in the url, there could be cases where
+  we end up in a nested folder. For this reason, we added a resolveDir attribute
+  that saves the resloved directory of the file that is requiring the new package
+*/
+
+// *********** Caching ***********
+/* We could have used local storage to cache the requests but local storage is limited 
+   and it might lead up to some requests being emitted. Instead, we will use indexedDB 
+   which is slightly more complicated and for that reason, we utilize localforage to 
+   make it much easier when using indexedDB 
+*/
