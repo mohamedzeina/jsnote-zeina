@@ -11,45 +11,65 @@ export const fetchPlugin = (inputCode: string) => {
   return {
     name: 'fetch-plugin',
     setup(build: esbuild.PluginBuild) {
-      build.onLoad({ filter: /.*/ }, async (args: any) => {
-        if (args.path === 'index.js') {
-          return {
-            loader: 'jsx',
-            contents: inputCode,
-          };
+      build.onLoad({ filter: /^index\.js$/ }, () => {
+        return {
+          loader: 'jsx',
+          contents: inputCode,
+        };
+      });
+
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+        // Check to see if we already fetched this file
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+
+        // and if it is in the cache, return it immediately
+        if (cachedResult) {
+          return cachedResult;
         }
 
-        // // Check to see if we already fetched this file
-        // const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
-        //   args.path
-        // );
-
-        // // and if it is in the cache, return it immediately
-        // if (cachedResult) {
-        //   return cachedResult;
-        // }
-
         const { data, request } = await axios.get(args.path);
-
-        const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
 
         const escaped = data
           .replace(/\n/g, '') //Find new lines and remove them
           .replace(/"/g, '\\"') //Find double quotes and escape them
           .replace(/'/g, "\\'"); //Find single quotes and escape them
 
-        const contents =
-          fileType === 'css'
-            ? `
+        const contents = `
         const style = document.createElement('style');
         style.innerText = '${escaped}';
         document.head.appendChild(style);
-        `
-            : data;
+        `;
 
         const result: esbuild.OnLoadResult = {
           loader: 'jsx',
           contents: contents,
+          resolveDir: new URL('./', request.responseURL).pathname, // First argument passed is used to remove the /index.js at the end of the url
+        };
+
+        //store it inside the cache
+        await fileCache.setItem(args.path, result);
+
+        return result;
+      });
+
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        // Check to see if we already fetched this file
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+
+        // and if it is in the cache, return it immediately
+        if (cachedResult) {
+          return cachedResult;
+        }
+
+        const { data, request } = await axios.get(args.path);
+
+        const result: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents: data,
           resolveDir: new URL('./', request.responseURL).pathname, // First argument passed is used to remove the /index.js at the end of the url
         };
 

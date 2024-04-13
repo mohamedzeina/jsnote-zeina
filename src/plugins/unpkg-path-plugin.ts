@@ -35,10 +35,3 @@ export const unpkgPathPlugin = () => {
   we end up in a nested folder. For this reason, we added a resolveDir attribute
   that saves the resloved directory of the file that is requiring the new package
 */
-
-// *********** Caching ***********
-/* We could have used local storage to cache the requests but local storage is limited 
-   and it might lead up to some requests being emitted. Instead, we will use indexedDB 
-   which is slightly more complicated and for that reason, we utilize localforage to 
-   make it much easier when using indexedDB 
-*/
