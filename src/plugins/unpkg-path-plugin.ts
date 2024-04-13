@@ -11,23 +11,22 @@ export const unpkgPathPlugin = (inputCode: string) => {
   return {
     name: 'unpkg-path-plugin',
     setup(build: esbuild.PluginBuild) {
+      //Handle root entry file of 'index.js'
+      build.onResolve({ filter: /(^index\.js$)/ }, () => {
+        return { path: 'index.js', namespace: 'a' };
+      });
+
+      //Hadle relative paths in a module (./ or ../)
+      build.onResolve({ filter: /^\.+\// }, (args: any) => {
+        return {
+          namespace: 'a',
+          path: new URL(args.path, 'https://unpkg.com' + args.resolveDir + '/')
+            .href, //Forward slash for the URL constructor to use the relative path of the URL
+        };
+      });
+
+      //Hadle main file of a module
       build.onResolve({ filter: /.*/ }, async (args: any) => {
-        console.log('onResolve', args);
-        if (args.path === 'index.js') {
-          return { path: args.path, namespace: 'a' };
-        }
-
-        // Case for packages having relative and nested paths
-        if (args.path.includes('./') || args.path.includes('../')) {
-          return {
-            namespace: 'a',
-            path: new URL(
-              args.path,
-              'https://unpkg.com' + args.resolveDir + '/'
-            ).href, //Forward slash for the URL constructor to use the relative path of the URL
-          };
-        }
-
         return {
           namespace: 'a',
           path: `https://unpkg.com/${args.path}`,
