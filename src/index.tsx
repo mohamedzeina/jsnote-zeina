@@ -2,6 +2,7 @@ import * as esbuild from 'esbuild-wasm';
 import ReactDOM from 'react-dom/client';
 import { useState, useEffect, useRef } from 'react';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
+import { fetchPlugin } from './plugins/fetch-plugin';
 
 const el = document.getElementById('root');
 const root = ReactDOM.createRoot(el!);
@@ -21,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     startService();
-  }, []); //second argument ([]) just states that this function will be called only once when the page renders
+  }, []); //Second argument ([]) just states that this function will be called only once when the page renders
 
   const onClick = async () => {
     if (!ref.current) {
@@ -32,7 +33,7 @@ const App = () => {
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin(input)],
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)], //Plugins are ran from left to right
       define: {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
