@@ -18,17 +18,25 @@ export const fetchPlugin = (inputCode: string) => {
         };
       });
 
-      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+      /* This onLoad has the caching mechanism because we do not want 
+         duplicated code in the next two onLoads. If onLoad does not
+         find a cached result, it will not return anything so ESbuild
+         will proceed and find the next onLoad with a matching filter,
+         execute it and try to return an object
+      */
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
         // Check to see if we already fetched this file
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
           args.path
         );
 
-        // and if it is in the cache, return it immediately
+        //If it is in the cache, return it immediately
         if (cachedResult) {
           return cachedResult;
         }
+      });
 
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
 
         const escaped = data
@@ -55,16 +63,6 @@ export const fetchPlugin = (inputCode: string) => {
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        // Check to see if we already fetched this file
-        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
-          args.path
-        );
-
-        // and if it is in the cache, return it immediately
-        if (cachedResult) {
-          return cachedResult;
-        }
-
         const { data, request } = await axios.get(args.path);
 
         const result: esbuild.OnLoadResult = {
