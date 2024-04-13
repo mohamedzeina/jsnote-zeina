@@ -31,11 +31,19 @@ export const fetchPlugin = (inputCode: string) => {
 
         const { data, request } = await axios.get(args.path);
 
-        const loader = args.path.match(/.css$/) ? 'css' : 'jsx';
+        const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
+        const contents =
+          fileType === 'css'
+            ? `
+        const stype = document.createElement('style');
+        style.innerText = 'body {background-color: "red" }';
+        document.head.appendChild(style);
+        `
+            : data;
 
         const result: esbuild.OnLoadResult = {
-          loader,
-          contents: data,
+          loader: 'jsx',
+          contents: contents,
           resolveDir: new URL('./', request.responseURL).pathname, // First argument passed is used to remove the /index.js at the end of the url
         };
 
@@ -53,4 +61,10 @@ export const fetchPlugin = (inputCode: string) => {
    and it might lead up to some requests being emitted. Instead, we will use indexedDB 
    which is slightly more complicated and for that reason, we utilize localforage to 
    make it much easier when using indexedDB 
+*/
+
+// *********** ESBuild CSS ***********
+/* ES build expects to output two files when loading CSS files. The css files are written 
+   in another file than the one containing our JS code. For that reason, we won't be
+   using the css loader type.
 */
