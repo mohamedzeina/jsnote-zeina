@@ -52,7 +52,22 @@ const App = () => {
         <div id="root"></div>
         <script>
           window.addEventListener('message', (event) => {
-            eval(event.data);
+            try {
+              eval(event.data);
+            } catch (err) {
+              if(err instanceof Error) {
+                const root = document.querySelector('#root');
+                root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err.message + '</div>';
+                console.log(err);
+              }
+              else {
+                root.innerHTML = '<div style="color: red;"> Unexpected error occured </div>';
+                console.log(err);
+              }
+              
+              
+            }
+            
           }, false);
         </script>
       </body>
