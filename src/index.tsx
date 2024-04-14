@@ -43,6 +43,12 @@ const App = () => {
     setCode(result.outputFiles[0].text);
   };
 
+  const html = `
+  <script> 
+    ${code} 
+  </script>
+  `;
+
   return (
     <div>
       <textarea
@@ -53,13 +59,10 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe sandbox="" srcDoc={html}></iframe>
+      <iframe sandbox="allow-scripts" srcDoc={html}></iframe>
     </div>
   );
 };
-
-const html = `
-<h1>Local HTML doc </h1>`;
 
 root.render(<App />);
 
