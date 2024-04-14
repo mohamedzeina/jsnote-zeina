@@ -42,7 +42,7 @@ const App = () => {
     });
 
     // setCode(result.outputFiles[0].text);
-    iframe.current.conentWindow.postMessage(result.outputFiles[0].text, '*');
+    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
   };
 
   const html = `
@@ -84,7 +84,7 @@ root.render(<App />);
   3) Having same domain, port, portocol (http vs https) enables communication between parent and child
 */
 
-/***** srcDoc Approach*****
+/***** srcDoc Approach with <script></script>*****
   srcDoc approach allows us to load local html which contains two script tags.
   We add the transpiled and bundled code between the script tags
   Problem #1: some packages that we import have script tags inside of them
@@ -93,4 +93,13 @@ root.render(<App />);
   dumped. 
   Problem #2: if code gets very large, attribute will get very large and some
   browsers won't allow attributes of huge length 
+*/
+
+/***** Event Listener Approach *****
+    Instead of having script tags, we created an event listener inside the iframe.
+    We then got a reference to the iframe element and whenever a new code is
+    bundled and transpiled, the parent frame posts the code as a message.
+    Since we have an message event listener inside the iframe, it interecepts 
+    the code that was posted by the parent. This approach elimates both of the 
+    problems created by the srcDoc apporach using the script tags.
 */
