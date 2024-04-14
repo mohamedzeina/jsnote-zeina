@@ -53,9 +53,15 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe src="/test.html"></iframe>
+      <iframe sandbox="" src="/test.html"></iframe>
     </div>
   );
 };
 
 root.render(<App />);
+
+/***** IFrame Sandbox *****
+  1) Having sandbox prop in iframe element disables communication between parent and child 
+  2) Having sandbox = 'allow-same-origin' enables communication between parent and child
+  3) Having same domain, port, portocol (http vs https) enables communication between parent and child
+*/
