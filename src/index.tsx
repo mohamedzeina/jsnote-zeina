@@ -53,10 +53,13 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe sandbox="" src="/test.html"></iframe>
+      <iframe sandbox="" srcDoc={html}></iframe>
     </div>
   );
 };
+
+const html = `
+<h1>Local HTML doc </h1>`;
 
 root.render(<App />);
 
