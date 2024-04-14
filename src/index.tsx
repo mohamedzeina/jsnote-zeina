@@ -71,3 +71,14 @@ root.render(<App />);
   2) Having sandbox = 'allow-same-origin' enables communication between parent and child
   3) Having same domain, port, portocol (http vs https) enables communication between parent and child
 */
+
+/***** srcDoc Approach*****
+  srcDoc approach allows us to load local html which contains two script tags.
+  We add the transpiled and bundled code between the script tags
+  Problem #1: some packages that we import have script tags inside of them
+  so the browswer automatically uses the closing script tag inside the package 
+  being imported and the rest of the code inisde the imported package gets
+  dumped. 
+  Problem #2: if code gets very large, attribute will get very large and some
+  browsers won't allow attributes of huge length 
+*/
