@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+## Description
+Jbook is an application made with React and Typescript. It is a code editing application like CodePen and CodeSandBox. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The application allows the user to:
+1) Write JSX code Inside a Monaco Editor
+2) Format the Written Code Using Prettier
+3) Execute and Preview the Result of the Written Code
 
-## Available Scripts
 
-In the project directory, you can run:
+In-Browser Code transpiling and bundling is done using ESBuild 
+NPM packages to be imported by the user are dynamically fetched using the Unpkg API
+Caching is implemented for the requests used to fetch NPM packages to improve the performance
+Safe handling untrusted code execution is achieved by using a sandboxed IFrame
+Monaco editor is used as the code editor and Prettier is used as the code formatter
+Code highlighting is done using monaco-jsx-highlighter and jscodeshift
 
-### `npm start`
+## How To Run Locally
+First, clone the repo to your local machine:
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+Then, open up a terminal in the project's directory and install next by running the following command:
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+Then, open a terminal in the local repo and run the development server:
 
-### `npm test`
+```bash
+npm run start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
