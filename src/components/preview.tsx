@@ -39,7 +39,9 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
 
   useEffect(() => {
     iframe.current.srcdoc = html; // reset the iframe contents
-    iframe.current.contentWindow.postMessage(code, '*');
+    setTimeout(() => {
+      iframe.current.contentWindow.postMessage(code, '*'); // post message was too fast so code execution was not being displayed
+    }, 50);
   }, [code]); // anytime we get new code, reset the iframe contents
 
   return (
