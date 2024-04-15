@@ -31,20 +31,19 @@ const App = () => {
       return;
     }
 
-    iframe.current.srcdoc = html; //To reset the iframe contents
+    iframe.current.srcdoc = html; // reset the iframe contents
 
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)], //Plugins are ran from left to right
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)], // plugins are ran from left to right
       define: {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
       },
     });
 
-    // setCode(result.outputFiles[0].text);
     iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
   };
 
