@@ -7,12 +7,12 @@ The application allows the user to:
 3) Execute and Preview the Result of the Written Code
 
 
-In-Browser Code transpiling and bundling is done using ESBuild 
-NPM packages to be imported by the user are dynamically fetched using the Unpkg API
-Caching is implemented for the requests used to fetch NPM packages to improve the performance
-Safe handling untrusted code execution is achieved by using a sandboxed IFrame
-Monaco editor is used as the code editor and Prettier is used as the code formatter
-Code highlighting is done using monaco-jsx-highlighter and jscodeshift
+In-Browser Code transpiling and bundling is done using ESBuild   
+NPM packages to be imported by the user are dynamically fetched using the Unpkg API  
+Caching is implemented for the requests used to fetch NPM packages to improve the performance  
+Safe handling untrusted code execution is achieved by using a sandboxed IFrame  
+Monaco editor is used as the code editor and Prettier is used as the code formatter  
+Code highlighting is done using monaco-jsx-highlighter and jscodeshift  
 
 ## How To Run Locally
 First, clone the repo to your local machine:
