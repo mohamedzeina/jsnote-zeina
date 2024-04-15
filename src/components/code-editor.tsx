@@ -1,8 +1,11 @@
 import './code-editor.css';
+import './syntax.css';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import { useRef } from 'react';
+import codeShift from 'jscodeshift';
+import Highlighter from 'monaco-jsx-highlighter';
 
 interface codeEditorProps {
   initalValue: string;
@@ -19,6 +22,21 @@ const CodeEditor: React.FC<codeEditorProps> = ({ onChange, initalValue }) => {
     });
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+
+    const highlighter = new Highlighter(
+      // @ts-ignore // type script is not aware that we are loading the editor inside the browser so we tell it to not typecheck the next line
+      window.monaco, // window gets a reference to the monaco library automatically since the monaco editor is being run in the browser
+      codeShift,
+      monacoEditor
+    );
+    highlighter.highLightOnDidChangeModelContent(
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+
+      // added these empty functions so that it does not log every syntax error to the console as we type
+    );
   };
 
   const onFormatClick = () => {
