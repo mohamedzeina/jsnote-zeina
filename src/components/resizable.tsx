@@ -1,5 +1,5 @@
 import './resizable.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ResizableBox, ResizableBoxProps } from 'react-resizable';
 
 interface ResizableProps {
@@ -9,10 +9,13 @@ interface ResizableProps {
 
 const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   let resizableProps: ResizableBoxProps;
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     const listener = () => {
-      console.log(window.innerWidth, window.innerHeight);
+      setInnerHeight(window.innerHeight);
+      setInnerWidth(window.innerWidth);
     };
     window.addEventListener('resize', listener);
 
@@ -24,8 +27,8 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   if (direction === 'horizontal') {
     resizableProps = {
       className: 'resize-horizontal',
-      minConstraints: [window.innerWidth * 0.2, Infinity],
-      maxConstraints: [window.innerWidth * 0.75, Infinity], // resize box cannot go beyond 75% of the width of the screen
+      minConstraints: [innerWidth * 0.2, Infinity],
+      maxConstraints: [innerWidth * 0.75, Infinity], // resize box cannot go beyond 75% of the width of the screen
       height: Infinity,
       width: window.innerWidth * 0.75,
       resizeHandles: ['e'],
@@ -33,7 +36,7 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   } else {
     resizableProps = {
       minConstraints: [Infinity, 24],
-      maxConstraints: [Infinity, window.innerHeight * 0.9], // resize box cannot go beyond 90% of the height of the screen
+      maxConstraints: [Infinity, innerHeight * 0.9], // resize box cannot go beyond 90% of the height of the screen
       height: 300,
       width: Infinity,
       resizeHandles: ['s'],
