@@ -1,49 +1,21 @@
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
-import * as esbuild from 'esbuild-wasm';
+
 import ReactDOM from 'react-dom/client';
-import { useState, useEffect, useRef } from 'react';
-import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
-import { fetchPlugin } from './plugins/fetch-plugin';
+import { useState } from 'react';
 import CodeEditor from './components/code-editor';
 import Preview from './components/preview';
+import bundle from './bundler';
 
 const el = document.getElementById('root');
 const root = ReactDOM.createRoot(el!);
 
 const App = () => {
-  const ref = useRef<any>();
   const [code, setCode] = useState('');
   const [input, setInput] = useState('');
 
-  const startService = async () => {
-    ref.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    });
-    console.log(ref.current);
-  };
-
-  useEffect(() => {
-    startService();
-  }, []); //Second argument ([]) just states that this function will be called only once when the page renders
-
   const onClick = async () => {
-    if (!ref.current) {
-      return;
-    }
-
-    const result = await ref.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)], // plugins are ran from left to right
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window',
-      },
-    });
-
-    setCode(result.outputFiles[0].text);
+    const output = await bundle(input);
+    setCode(output);
   };
 
   return (
