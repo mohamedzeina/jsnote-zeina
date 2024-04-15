@@ -13,14 +13,17 @@ const html = `
       <body>
         <div id="root"></div>
         <script>
+        const handleError = (err) => {
+            const root = document.querySelector('#root');
+            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err.message + '</div>';
+            console.log(err);
+        }
           window.addEventListener('message', (event) => {
             try {
               eval(event.data);
             } catch (err) {
               if(err instanceof Error) {
-                const root = document.querySelector('#root');
-                root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err.message + '</div>';
-                console.log(err);
+                handleError(err);
               }
               else {
                 root.innerHTML = '<div style="color: red;"> Unexpected error occured </div>';
