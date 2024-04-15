@@ -123,3 +123,9 @@ root.render(<App />);
     the code that was posted by the parent. This approach elimates both of the 
     problems created by the srcDoc apporach using the script tags.
 */
+
+/***** Eager Bundling *****
+ We cannot really bundle the user's code after each character he types because that
+ will take a lot of processing power. Goal is to bundle the code after the user 
+ stops typing by 0.5-1s 
+*/
