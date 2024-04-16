@@ -27,7 +27,7 @@ const CodeCell = () => {
         <Resizable direction="horizontal">
           <CodeEditor initalValue="hi" onChange={(value) => setInput(value)} />
         </Resizable>
-        <Preview code={code} />
+        <Preview code={code} bundlingError={err} />
       </div>
     </Resizable>
   );
