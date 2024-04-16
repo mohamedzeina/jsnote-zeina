@@ -32,8 +32,7 @@ const html = `
               handleError(err);
             }
             else {
-              root.innerHTML = '<div style="color: red;"> Unexpected error occured </div>';
-              console.log(err);
+              throw err;
               }
             } 
           }, false);
