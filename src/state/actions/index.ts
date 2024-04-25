@@ -1,4 +1,5 @@
 import { ActionType } from "../action-types";
+import { CellTypes } from "../cell";
 
 interface MoveCellAction {
   type: ActionType.MOVE_CELL;
@@ -18,7 +19,7 @@ interface InsertCellBeforeAction {
   type: ActionType.INSERT_CELL_BEFORE;
   payload: {
     id: string; // id of the cell we want to insert the new cell before
-    type: 'code' | 'text' // can be either a code cell or text cell
+    type: CellTypes // can be either a code cell or text cell
   }
 }
 
