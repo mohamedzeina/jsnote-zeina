@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
 import { Cell } from '../cell';
@@ -18,23 +19,14 @@ const initialState: CellState = {
   data: {},
 };
 
-const reducer = (
-  state: CellState = initialState,
-  action: Action
-): CellState => {
+const reducer = produce((state: CellState = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.UPDATE_CELL:
       const { id, content } = action.payload;
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [id]: {
-            ...state.data[id],
-            content,
-          },
-        },
-      };
+
+      state.data[id].content = content; // immer allows us to make these simple updates
+      return;
+
     case ActionType.DELETE_CELL:
       return state;
     case ActionType.INSERT_CELL_BEFORE:
@@ -44,6 +36,6 @@ const reducer = (
     default:
       return state;
   }
-};
+});
 
 export default reducer;
