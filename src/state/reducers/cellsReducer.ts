@@ -1,27 +1,40 @@
-import { ActionType } from "../action-types";
-import { Action } from "../actions";
-import { Cell } from "../cell";
+import { ActionType } from '../action-types';
+import { Action } from '../actions';
+import { Cell } from '../cell';
 
 interface CellState {
-  loading: boolean
+  loading: boolean;
   error: string | null;
   order: string[];
   data: {
-    [key: string]: Cell
-  }
+    [key: string]: Cell;
+  };
 }
 
 const initialState: CellState = {
   loading: false,
   error: null,
   order: [],
-  data: {}
-}
+  data: {},
+};
 
-const reducer = (state: CellState = initialState, action: Action): CellState => {
+const reducer = (
+  state: CellState = initialState,
+  action: Action
+): CellState => {
   switch (action.type) {
     case ActionType.UPDATE_CELL:
-      return state;
+      const { id, content } = action.payload;
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [id]: {
+            ...state.data[id],
+            content,
+          },
+        },
+      };
     case ActionType.DELETE_CELL:
       return state;
     case ActionType.INSERT_CELL_BEFORE:
@@ -31,6 +44,6 @@ const reducer = (state: CellState = initialState, action: Action): CellState => 
     default:
       return state;
   }
-}
+};
 
 export default reducer;

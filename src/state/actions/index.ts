@@ -1,13 +1,12 @@
-import { ActionType } from "../action-types";
-import { CellTypes } from "../cell";
+import { ActionType } from '../action-types';
+import { CellTypes, CellDirection } from '../cell';
 
 export interface MoveCellAction {
   type: ActionType.MOVE_CELL;
   payload: {
     id: string;
-    direction: 'up' | 'down';
-  }
-
+    direction: CellDirection;
+  };
 }
 
 export interface DeleteCellAction {
@@ -19,8 +18,8 @@ export interface InsertCellBeforeAction {
   type: ActionType.INSERT_CELL_BEFORE;
   payload: {
     id: string; // id of the cell we want to insert the new cell before
-    type: CellTypes // can be either a code cell or text cell
-  }
+    type: CellTypes; // can be either a code cell or text cell
+  };
 }
 
 export interface UpdateCellAction {
@@ -28,11 +27,11 @@ export interface UpdateCellAction {
   payload: {
     id: string;
     content: string;
-  }
+  };
 }
 
 export type Action =
-  MoveCellAction
+  | MoveCellAction
   | DeleteCellAction
   | InsertCellBeforeAction
-  | UpdateCellAction
+  | UpdateCellAction;
