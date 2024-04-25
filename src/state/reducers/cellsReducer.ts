@@ -28,7 +28,9 @@ const reducer = produce((state: CellState = initialState, action: Action) => {
       return;
 
     case ActionType.DELETE_CELL:
-      return state;
+      delete state.data[action.payload]; // deleting cell from data dictionary
+      state.order = state.order.filter((id) => id !== action.payload); // delete cell from the order array
+      return;
     case ActionType.INSERT_CELL_BEFORE:
       return state;
     case ActionType.MOVE_CELL:
