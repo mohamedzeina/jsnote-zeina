@@ -17,7 +17,7 @@ export interface DeleteCellAction {
 export interface InsertCellBeforeAction {
   type: ActionType.INSERT_CELL_BEFORE;
   payload: {
-    id: string; // id of the cell we want to insert the new cell before
+    id: string | null; // id of the cell we want to insert the new cell before and null if user does not provide an index, we push it to the end of the list
     type: CellTypes; // can be either a code cell or text cell
   };
 }
