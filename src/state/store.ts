@@ -5,7 +5,7 @@ import reducers from './reducers';
 
 export const store = createStore(reducers, {}, applyMiddleware(thunk));
 
-/* manual test for redux store
+// manual test for redux store
 
 store.dispatch({
   type: ActionType.INSERT_CELL_BEFORE,
@@ -26,5 +26,3 @@ store.dispatch({
 const id = store.getState().cells?.order[0];
 
 console.log(id);
-
-*/
