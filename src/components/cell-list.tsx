@@ -1,3 +1,4 @@
+import { Fragment } from 'react/jsx-runtime';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import CellListItem from './cell-list-item';
 import AddCell from './add-cell';
@@ -10,10 +11,10 @@ const CellList: React.FC = () => {
   }); // for each id in the order list, return the cell data so we get them in order
 
   const renderedCells = cells.map((cell) => (
-    <>
+    <Fragment key={cell.id}>
       <AddCell nextCellId={cell.id} />
-      <CellListItem key={cell.id} cell={cell} />
-    </>
+      <CellListItem cell={cell} />
+    </Fragment>
   ));
   return (
     <div>
