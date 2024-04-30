@@ -45,7 +45,7 @@ const reducer = produce((state: CellState = initialState, action: Action) => {
       state.order[targetIndex] = action.payload.id; // basic swap operation between the two cells
 
       return state;
-    case ActionType.INSERT_CELL_BEFORE:
+    case ActionType.INSERT_CELL_AFTER:
       const cell: Cell = {
         content: '',
         type: action.payload.type,
@@ -59,9 +59,9 @@ const reducer = produce((state: CellState = initialState, action: Action) => {
       );
 
       if (foundIndex < 0) {
-        state.order.push(cell.id); // adding cell id at the end of the order list
+        state.order.unshift(cell.id); // adding cell id at the start of the order list
       } else {
-        state.order.splice(foundIndex, 0, cell.id); // adding cell id before the id in the payload
+        state.order.splice(foundIndex + 1, 0, cell.id); // adding cell id after the id in the payload
       }
 
       return state;
