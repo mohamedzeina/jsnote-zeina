@@ -18,7 +18,13 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const { data, order } = state.cells;
     const orderedCells = order.map((id) => data[id]);
 
-    const cumlativeCode = [];
+    const cumlativeCode = [
+      `
+      const show = (value) => {
+        document.querySelector('#root').innerHTML = value;
+      };
+      `,
+    ];
     for (let c of orderedCells) {
       // going through ordered cells and getting all prior code cells to accumlate them
       if (c.type == 'code') {
