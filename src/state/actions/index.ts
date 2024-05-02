@@ -1,3 +1,4 @@
+import { Bundle } from 'typescript';
 import { ActionType } from '../action-types';
 import { CellTypes, CellDirection } from '../cell';
 
@@ -22,6 +23,24 @@ export interface InsertCellAfterAction {
   };
 }
 
+export interface BundleStartAction {
+  type: ActionType.BUNDLE_START;
+  payload: {
+    cellId: string;
+  };
+}
+
+export interface BundleCompleteAction {
+  type: ActionType.BUNDLE_COMPLETE;
+  payload: {
+    cellId: string;
+    bundle: {
+      code: string;
+      err: string;
+    };
+  };
+}
+
 export interface UpdateCellAction {
   type: ActionType.UPDATE_CELL;
   payload: {
@@ -34,4 +53,6 @@ export type Action =
   | MoveCellAction
   | DeleteCellAction
   | InsertCellAfterAction
-  | UpdateCellAction;
+  | UpdateCellAction
+  | BundleStartAction
+  | BundleCompleteAction;
