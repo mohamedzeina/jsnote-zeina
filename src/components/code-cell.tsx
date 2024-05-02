@@ -18,11 +18,10 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const { data, order } = state.cells;
     const orderedCells = order.map((id) => data[id]);
 
-    const cumlativeCode = [
-      `
-        import _React from 'react';
+    const showFunc = `
+    import _React from 'react';
         import _ReactDOM from 'react-dom';
-        const show = (value) => {
+          var show = (value) => {
           const root = document.querySelector('#root');
 
           if (typeof value === 'object') {
@@ -36,15 +35,23 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
             root.innerHTML = value;
           }
           
-        };
-      `,
-    ];
+        };`;
+    const cumlativeCode = [];
+    const showFuncNoop = 'var show = () => {}'; // show function that clears prior code cells using show
+
     for (let c of orderedCells) {
       // going through ordered cells and getting all prior code cells to accumlate them
-      if (c.type == 'code') {
+      if (c.type === 'code') {
+        if (c.id === cell.id) {
+          // if cell is the cell we're trying to execute, add the show function with actual logic
+          cumlativeCode.push(showFunc);
+        } else {
+          // if cell is a prior cell, add show function that does nothing to clear show function calls by this prior cell
+          cumlativeCode.push(showFuncNoop);
+        }
         cumlativeCode.push(c.content);
       }
-      if (c.id == cell.id) {
+      if (c.id === cell.id) {
         // if we reach the cell that we are rendering, stop
         break;
       }
