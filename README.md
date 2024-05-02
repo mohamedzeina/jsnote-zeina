@@ -8,17 +8,17 @@ The application allows the user to:
 4) Create Text Cells and Write Narrative Text Inside Using a Markdown Editor
 5) Delete and Change the Order of the Cells Using an Action Bar
 
-## Tools
+## Tools & Mechanisms
 * In-Browser Code transpiling and bundling is done using ESBuild   
 * NPM packages to be imported by the user are dynamically fetched using the Unpkg API  
 * Caching is implemented for the requests used to fetch NPM packages to improve the performance  
 * Safe handling untrusted code execution is achieved by using a sandboxed IFrame  
 * Monaco editor is used as the code editor and Prettier is used as the code formatter  
 * Code highlighting is done using monaco-jsx-highlighter and jscodeshift
-*  React Resizable was used for the resizing of the cells
-*  The uiw/react-md-editor was used as the markdown editor
-*  Redux was used to store and manipulate the cell data
-*  Immer was used to simplify the state updates
+* Resizing of the cells is done using React Resizable
+* The uiw/react-md-editor is used as the markdown editor
+* Storage and manipulation of cell data is done using Redux 
+* State updates inside the redux reducer is simplified using Immer
 
 ## How To Run Locally
 First, clone the repo to your local machine:
