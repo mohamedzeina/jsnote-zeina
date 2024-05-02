@@ -36,19 +36,19 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   useEffect(() => {
     if (!bundle) {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumlativeCode.join('\n'));
       return;
     }
 
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumlativeCode.join('\n'));
     }, 1000);
 
     return () => {
       clearTimeout(timer); // clearing timer if user input is updated before 1 second passes
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.id, cell.content, createBundle]);
+  }, [cell.id, cumlativeCode.join('\n'), createBundle]);
 
   return (
     <Resizable direction="vertical">
