@@ -2,10 +2,10 @@
 Jbook is an application made with React and Typescript. It is a code editing application used for testing and showcasing user-created HTML, CSS and JavaScript code snippets like CodePen and CodeSandBox. 
 
 The application allows the user to:
-1) Create Code Cells and Write HTML, CSS and JavaScript Code Inside a Monaco Editor
+1) Create Code Cells and Write HTML, CSS and JavaScript Code Using a Monaco Editor
 2) Format the Written Code Using Prettier
 3) Execute and Preview the Result of the Written Code
-4) Create Text Cells and Write Narrative Text Inside Using a Markdown Editor
+4) Create Text Cells and Write Documentation of the Code Cells Using a Markdown Editor
 5) Delete and Change the Order of the Cells Using an Action Bar
 
 ## Tools & Mechanisms
