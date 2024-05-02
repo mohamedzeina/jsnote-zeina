@@ -15,8 +15,6 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
-  console.log(bundle);
-
   useEffect(() => {
     const timer = setTimeout(async () => {
       createBundle(cell.id, cell.content);
@@ -42,7 +40,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
             onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>
-        {/* <Preview code={code} bundlingError={err} /> */}
+        {bundle && <Preview code={bundle.code} bundlingError={bundle.err} />}
       </div>
     </Resizable>
   );
