@@ -23,11 +23,11 @@ The application allows the user to:
 ## How To Run Locally
 First, clone the repo to your local machine:
 ```
-
+https://github.com/mohamedzeina/jbook.git
 ```
-Then, open up a terminal in the project's directory and install next by running the following command:
+Then, open up a terminal in the project's directory and install all dependencies by running the following command:
 ```
-
+npm install
 ```
 Then, open a terminal in the local repo and run the development server:
 
