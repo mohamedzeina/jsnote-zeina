@@ -23,7 +23,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return () => {
       clearTimeout(timer); // clearing timer if user input is updated before 1 second passes
     };
-  }, [cell.id, cell.content]);
+  }, [cell.id, cell.content, createBundle]);
 
   return (
     <Resizable direction="vertical">
