@@ -3,5 +3,11 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
+  }, 
+  "scripts": {
+    "start": "lerna run start --parallel" 
+  },
+  "scriptsComments": {
+    "start": "Runs all start commands inside all packages in parallel"
   }
 }
