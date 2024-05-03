@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.serveCommand = void 0;
+const path_1 = __importDefault(require("path"));
 const commander_1 = require("commander");
 const local_api_1 = require("local-api");
 exports.serveCommand = new commander_1.Command()
@@ -9,7 +13,9 @@ exports.serveCommand = new commander_1.Command()
     .option('-p, --port <number>', 'port to run server on', '4005')
     .action((filename = 'notebook.js', options) => {
     // logic of the command
-    (0, local_api_1.serve)(parseInt(options.port), filename, '/');
+    const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename)); // getting the directory
+    filename = path_1.default.basename(filename); // getting the filename
+    (0, local_api_1.serve)(parseInt(options.port), filename, dir);
 });
 /*
     -[filename]: specifices that there is an optional filename argument
@@ -19,6 +25,10 @@ exports.serveCommand = new commander_1.Command()
     -notebook.js is the default file name that is going to save
     the cells of the user in case the user does not provide any
     filename
+    -process.cwd() gets the path of the current working directory that
+    the terminal is open in
+    -path.dirname gets the relative directory (if any) provided in the
+    filename that the user inputs
     
 
 
