@@ -6,12 +6,15 @@ export const serveCommand = new Command()
   .command('serve [filename]') // watch for serve command in the cmd
   .description('Open a file for editing')
   .option('-p, --port <number>', 'port to run server on', '4005')
-  .action((filename = 'notebook.js', options: { port: string }) => {
+  .action(async (filename = 'notebook.js', options: { port: string }) => {
     // logic of the command
-
-    const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
-    filename = path.basename(filename); // getting the filename
-    serve(parseInt(options.port), filename, dir);
+    try {
+      const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
+      filename = path.basename(filename); // getting the filename
+      await serve(parseInt(options.port), filename, dir);
+    } catch (err) {
+      if (err instanceof Error) console.log('Problem: ', err.message);
+    }
   });
 
 /*

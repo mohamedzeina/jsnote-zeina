@@ -7,8 +7,10 @@ exports.serve = void 0;
 const express_1 = __importDefault(require("express"));
 const serve = (port, filename, dir) => {
     const app = (0, express_1.default)();
-    app.listen(port, () => {
-        console.log('Listening on port: ', port);
+    return new Promise((resolve, reject) => {
+        app.listen(port, resolve).on('error', reject);
     });
 };
 exports.serve = serve;
+// if express server starts successfully, resolve function is called and promise is finished
+// if something fails, reject function will be called with an error state
