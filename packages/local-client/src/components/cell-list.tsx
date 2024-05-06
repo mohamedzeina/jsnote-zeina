@@ -12,11 +12,16 @@ const CellList: React.FC = () => {
     });
   }); // for each id in the order list, return the cell data so we get them in order
 
-  const { fetchCells } = useActions();
+  const { fetchCells, SaveCells } = useActions();
 
   useEffect(() => {
     fetchCells();
   }, []);
+
+  useEffect(() => {
+    SaveCells();
+  }, [JSON.stringify(cells)]);
+
   const renderedCells = cells.map((cell) => (
     <Fragment key={cell.id}>
       <CellListItem cell={cell} />
