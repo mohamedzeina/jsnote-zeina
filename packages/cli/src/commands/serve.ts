@@ -1,3 +1,4 @@
+import path from 'path';
 import { Command } from 'commander';
 import { serve } from 'local-api';
 
@@ -8,7 +9,9 @@ export const serveCommand = new Command()
   .action((filename = 'notebook.js', options: { port: string }) => {
     // logic of the command
 
-    serve(parseInt(options.port), filename, '/');
+    const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
+    filename = path.basename(filename); // getting the filename
+    serve(parseInt(options.port), filename, dir);
   });
 
 /*
@@ -19,6 +22,10 @@ export const serveCommand = new Command()
     -notebook.js is the default file name that is going to save
     the cells of the user in case the user does not provide any
     filename
+    -process.cwd() gets the path of the current working directory that
+    the terminal is open in 
+    -path.dirname gets the relative directory (if any) provided in the
+    filename that the user inputs
     
 
 
