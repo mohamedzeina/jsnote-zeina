@@ -2,18 +2,35 @@ import path from 'path';
 import { Command } from 'commander';
 import { serve } from 'local-api';
 
+interface LocalApiError {
+  code: string;
+}
+
 export const serveCommand = new Command()
   .command('serve [filename]') // watch for serve command in the cmd
   .description('Open a file for editing')
   .option('-p, --port <number>', 'port to run server on', '4005')
   .action(async (filename = 'notebook.js', options: { port: string }) => {
-    // logic of the command
+    const isLocalApiError = (err: any): err is LocalApiError => {
+      return typeof err.code === 'string';
+    };
+
     try {
       const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
       filename = path.basename(filename); // getting the filename
       await serve(parseInt(options.port), filename, dir);
+      console.log(
+        `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
+      );
     } catch (err) {
-      if (err instanceof Error) console.log('Problem: ', err.message);
+      if (isLocalApiError(err))
+        if (err.code === 'EADDRINUSE') {
+          console.log('Port is in use. Try running on a different port.');
+        } else if (err instanceof Error) {
+          console.log('Here is the problem: ', err.message);
+        }
+
+      process.exit(1); // exit the program if express server does not start successfully
     }
   });
 

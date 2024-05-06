@@ -21,15 +21,24 @@ exports.serveCommand = new commander_1.Command()
     .description('Open a file for editing')
     .option('-p, --port <number>', 'port to run server on', '4005')
     .action((...args_1) => __awaiter(void 0, [...args_1], void 0, function* (filename = 'notebook.js', options) {
-    // logic of the command
+    const isLocalApiError = (err) => {
+        return typeof err.code === 'string';
+    };
     try {
         const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename)); // getting the directory
         filename = path_1.default.basename(filename); // getting the filename
         yield (0, local_api_1.serve)(parseInt(options.port), filename, dir);
+        console.log(`Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`);
     }
     catch (err) {
-        if (err instanceof Error)
-            console.log('Problem: ', err.message);
+        if (isLocalApiError(err))
+            if (err.code === 'EADDRINUSE') {
+                console.log('Port is in use. Try running on a different port.');
+            }
+            else if (err instanceof Error) {
+                console.log('Here is the problem: ', err.message);
+            }
+        process.exit(1); // exit the program if express server does not start successfully
     }
 }));
 /*
