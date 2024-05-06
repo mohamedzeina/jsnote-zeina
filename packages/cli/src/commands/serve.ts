@@ -6,6 +6,8 @@ interface LocalApiError {
   code: string;
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const serveCommand = new Command()
   .command('serve [filename]') // watch for serve command in the cmd
   .description('Open a file for editing')
@@ -18,7 +20,7 @@ export const serveCommand = new Command()
     try {
       const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
       filename = path.basename(filename); // getting the filename
-      await serve(parseInt(options.port), filename, dir);
+      await serve(parseInt(options.port), filename, dir, !isProduction);
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
       );
