@@ -4,12 +4,14 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 export const serve = (port: number, filename: string, dir: string) => {
   const app = express();
 
-  app.use(
-    createProxyMiddleware({
-      target: 'http://127.0.0.1:3000',
-      ws: true, //websocket support
-    })
-  );
+  app.use(express.static('../../local-client/build'));
+
+  // app.use(
+  //   createProxyMiddleware({
+  //     target: 'http://127.0.0.1:3000',
+  //     ws: true, //websocket support
+  //   })
+  // );
 
   return new Promise<void>((resolve, reject) => {
     app.listen(port, resolve).on('error', reject);
