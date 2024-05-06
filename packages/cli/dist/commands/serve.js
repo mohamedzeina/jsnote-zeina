@@ -18,7 +18,7 @@ const commander_1 = require("commander");
 const local_api_1 = require("local-api");
 const isProduction = process.env.NODE_ENV === 'production';
 exports.serveCommand = new commander_1.Command()
-    .command('serve [filename]') // watch for serve command in the cmd
+    .command('serve [filename]') // Watch for serve command in the cmd
     .description('Open a file for editing')
     .option('-p, --port <number>', 'port to run server on', '4005')
     .action((...args_1) => __awaiter(void 0, [...args_1], void 0, function* (filename = 'notebook.js', options) {
@@ -27,7 +27,7 @@ exports.serveCommand = new commander_1.Command()
     };
     try {
         const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename)); // getting the directory
-        filename = path_1.default.basename(filename); // getting the filename
+        filename = path_1.default.basename(filename); // Getting the filename
         yield (0, local_api_1.serve)(parseInt(options.port), filename, dir, !isProduction);
         console.log(`Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`);
     }
@@ -39,7 +39,7 @@ exports.serveCommand = new commander_1.Command()
             else if (err instanceof Error) {
                 console.log('Here is the problem: ', err.message);
             }
-        process.exit(1); // exit the program if express server does not start successfully
+        process.exit(1); // Exit the program if express server does not start successfully
     }
 }));
 /*

@@ -9,7 +9,7 @@ interface LocalApiError {
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const serveCommand = new Command()
-  .command('serve [filename]') // watch for serve command in the cmd
+  .command('serve [filename]') // Watch for serve command in the cmd
   .description('Open a file for editing')
   .option('-p, --port <number>', 'port to run server on', '4005')
   .action(async (filename = 'notebook.js', options: { port: string }) => {
@@ -19,7 +19,7 @@ export const serveCommand = new Command()
 
     try {
       const dir = path.join(process.cwd(), path.dirname(filename)); // getting the directory
-      filename = path.basename(filename); // getting the filename
+      filename = path.basename(filename); // Getting the filename
       await serve(parseInt(options.port), filename, dir, !isProduction);
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
@@ -32,7 +32,7 @@ export const serveCommand = new Command()
           console.log('Here is the problem: ', err.message);
         }
 
-      process.exit(1); // exit the program if express server does not start successfully
+      process.exit(1); // Exit the program if express server does not start successfully
     }
   });
 
