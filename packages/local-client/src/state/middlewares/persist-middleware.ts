@@ -11,6 +11,8 @@ export const persistMiddleware = ({
   dispatch: Dispatch<Action>;
   getState: () => RootState;
 }) => {
+  let timer: any;
+
   return (next: (action: Action) => void) => {
     return (action: any) => {
       next(action);
@@ -23,7 +25,12 @@ export const persistMiddleware = ({
           ActionType.DELETE_CELL,
         ].includes(action.type)
       ) {
-        SaveCells()(dispatch, getState); // We invoke the fucntion we get back from saveCells
+        if (timer) {
+          clearTimeout(timer); // clear timer if we end up here before the 250ms
+        }
+        timer = setTimeout(() => {
+          SaveCells()(dispatch, getState); // We invoke the fucntion we get back from saveCells
+        }, 250);
       }
     };
   };
