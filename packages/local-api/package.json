@@ -5,7 +5,9 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {"access": "public"},
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -21,9 +23,9 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@jsnote-zeina/local-client": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "http-proxy-middleware": "^3.0.0",
-    "@jsnote-zeina/local-client": "^0.1.0"
+    "http-proxy-middleware": "^3.0.0"
   }
 }
