@@ -1,5 +1,5 @@
 ## Description
-JSNote is an application made with React and Typescript. It is a code editing application used for testing and showcasing user-created HTML, CSS and JavaScript code snippets like CodePen and CodeSandBox. 
+JSNote-Zeina is an application made with React and Typescript. It is an interactive coding environment. You can write Javascript, see it executed, and write coprehensive documentation using markdown.
 
 The application allows the user to:
 1) Create code cells and JavaScript code using a Monaco Editor
@@ -20,8 +20,11 @@ The application allows the user to:
 * Code highlighting is done using monaco-jsx-highlighter and jscodeshift
 * Resizing of the cells is done using React Resizable
 * The uiw/react-md-editor is used as the markdown editor
-* Storage and manipulation of cell data is done using Redux 
-* State updates inside the redux reducer is simplified using Immer
+* Storage and manipulation of cells and bundles is done using Redux 
+* State updates inside the redux reducers are simplified using Immer
+* Package based development is achieved using Lerna
+* CLI was implemented using Commander
+* Local-API utilized Express for creating the server
   
 
 ## How To Run Locally
