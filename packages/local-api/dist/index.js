@@ -18,7 +18,7 @@ const serve = (port, filename, dir, useProxy) => {
         }));
     }
     else {
-        const packagePath = require.resolve('local-client/build/index.html'); // gets absolute path on user's local machine
+        const packagePath = require.resolve('@jsnote-zeina/local-client/build/index.html'); // gets absolute path on user's local machine
         app.use(express_1.default.static(path_1.default.dirname(packagePath)));
     }
     return new Promise((resolve, reject) => {

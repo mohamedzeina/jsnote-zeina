@@ -21,7 +21,9 @@ export const serve = (
       })
     );
   } else {
-    const packagePath = require.resolve('local-client/build/index.html'); // gets absolute path on user's local machine
+    const packagePath = require.resolve(
+      '@jsnote-zeina/local-client/build/index.html'
+    ); // gets absolute path on user's local machine
     app.use(express.static(path.dirname(packagePath)));
   }
 
