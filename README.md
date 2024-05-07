@@ -23,7 +23,7 @@ The application allows the user to:
 * Storage and manipulation of cells and bundles is done using Redux 
 * State updates inside the redux reducers are simplified using Immer
 * Package based development is achieved using Lerna
-* CLI was implemented using Commander
+* CLI is implemented using Commander
 * Local-API utilized Express for creating the server
   
 
