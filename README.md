@@ -1,12 +1,15 @@
 ## Description
-Jbook is an application made with React and Typescript. It is a code editing application used for testing and showcasing user-created HTML, CSS and JavaScript code snippets like CodePen and CodeSandBox. 
+JSNote-Zeina is an application made with React and Typescript. It is an interactive coding environment. You can write Javascript, see it executed, and write coprehensive documentation using markdown.
 
 The application allows the user to:
-1) Create Code Cells and Write HTML, CSS and JavaScript Code Using a Monaco Editor
-2) Format the Written Code Using Prettier
-3) Execute and Preview the Result of the Written Code
-4) Create Text Cells and Write Documentation of the Code Cells Using a Markdown Editor
-5) Delete and Change the Order of the Cells Using an Action Bar
+1) Create code cells and JavaScript code using a Monaco Editor
+2) Format the written code using Prettier
+3) Execute and preview the result of the written code
+4) Create text cells and write documentation of the code cells using a Markdown Editor
+5) Delete and change the order of the Cells using an action bar
+6) Cumulative code execution is allowed. If a user defines a variable in cell #1, they can refer to it in any following code cell\
+7) Show any React component, string, number, or anything else by calling the built in `show `function
+8) All changes get saved to the file the user opened Jbook with. If  a user ran `npx jsnote-zeina serve test.js` , all of the text and code will be saved to the `test.js` file
 
 ## Tools & Mechanisms
 * In-Browser Code transpiling and bundling is done using ESBuild   
@@ -17,23 +20,29 @@ The application allows the user to:
 * Code highlighting is done using monaco-jsx-highlighter and jscodeshift
 * Resizing of the cells is done using React Resizable
 * The uiw/react-md-editor is used as the markdown editor
-* Storage and manipulation of cell data is done using Redux 
-* State updates inside the redux reducer is simplified using Immer
+* Storage and manipulation of cells and bundles is done using Redux 
+* State updates inside the redux reducers are simplified using Immer
+* Package based development is achieved using Lerna
+* CLI was implemented using Commander
+* Local-API utilized Express for creating the server
+  
 
 ## How To Run Locally
-First, clone the repo to your local machine:
+Running the application on port 4005 (default) and notebook.js file (default)
 ```
-https://github.com/mohamedzeina/jbook.git
+npx jsnote-zeina serve
 ```
-Then, open up a terminal in the project's directory and install all dependencies by running the following command:
+Running the application on a custom port (5000) and notebook.js file (default)
 ```
-npm install
+npx jsnote-zeina serve -p 5000
 ```
-Then, open a terminal in the local repo and run the development server:
+or
+```
+npx jsnote-zeina serve -port=5000
+```
+Running the application on port 4005 (default) and a custom file (test.js)
+```
+npx jsnote-zeina serve test.js
+```
 
-```bash
-npm run start
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result
 
