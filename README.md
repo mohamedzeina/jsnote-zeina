@@ -1,5 +1,5 @@
 ## Description
-JSNote-Zeina is a React and TypeScript application designed as an interactive coding environment. It enables users to write JavaScript, see it executed in real-time, and create comprehensive documentation using Markdown.
+JSNote-Zeina is a React and TypeScript application designed as an interactive coding environment. It enables users to write JavaScript, see it executed in real-time, and create comprehensive documentation using Markdown. This application is published on npm.
 
 Key features include:
 
