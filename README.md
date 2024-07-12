@@ -22,8 +22,8 @@ Key features include:
 * Cell Resizing: Enabled with React Resizable.
 * State Management: Used Redux for storing and manipulating cells and bundles, with Immer simplifying state updates within reducers.
 * Package-Based Development: Managed using Lerna.
-Command Line Interface: Implemented with Commander.
-Local Server: Created using Express for the local API.
+* Command Line Interface: Implemented with Commander.
+* Local Server: Created using Express for the local API.
   
 
 ## How To Run Locally
